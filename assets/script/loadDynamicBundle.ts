@@ -22,21 +22,27 @@ export class loadDynamicBundle extends Component {
         // });
     }
     start() {
-        assetManager.loadBundle("http://192.180.0.76:8000", (err, bundle) => {
-            if (err) {
-                console.log("asset manager error", err);
-                return;
-            }
-            console.log("bundle", bundle);
-            bundle.load("images/person3/spriteFrame", SpriteFrame, null, (err, spriteFrame) => {
+        assetManager.loadBundle(
+            "https://storage.googleapis.com/everi-games/testingresources",
+            { version: "c9750" },
+            (err, bundle) => {
                 if (err) {
-                    console.error("bundle error", err);
+                    console.log("asset manager error", err);
                     return;
                 }
-                console.log(spriteFrame);
-                this.img.spriteFrame = spriteFrame;
-            });
-        });
+                console.log("bundle", bundle);
+
+                bundle.load("person/person1/spriteFrame", SpriteFrame, null, (err, spriteFrame) => {
+                    if (err) {
+                        console.error("bundle error", err);
+                        return;
+                    }
+                    console.log(spriteFrame.getHash());
+                    console.log(spriteFrame);
+                    this.img.spriteFrame = spriteFrame;
+                });
+            }
+        );
     }
 
     update(deltaTime: number) {}
